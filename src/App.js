@@ -1,6 +1,7 @@
 import './App.css';
-// import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ErrorBoundary } from 'react-error-boundary';
 import Pokemon from './Pokemon';
 
 const cli = new QueryClient({
@@ -13,9 +14,13 @@ const cli = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={cli}>
-      <Pokemon />
-    </QueryClientProvider>
+    <Suspense fallback={<p>Loading...</p>}>
+      <ErrorBoundary fallback={<p>Error has happened.</p>}>
+        <QueryClientProvider client={cli}>
+          <Pokemon />
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </Suspense>
   );
 }
 
