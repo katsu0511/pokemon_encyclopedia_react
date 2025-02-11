@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+import './Pokemon.css';
 
 const fetchPokemon = async () => {
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/pikachu/`);
