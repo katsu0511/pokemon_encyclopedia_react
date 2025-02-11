@@ -24,18 +24,24 @@ export default function Pokemon() {
 
   return (
     <section className='pokemon'>
-      <div>
-        <p>No. {data.id}</p>
-        <p>{data.name}</p>
+      <div className='top_info'>
+        <div className='image_frame'>
+          <img src={data.sprites.versions["generation-iii"].emerald.front_default} alt={data.name} />
+        </div>
+        <div className='details'>
+          <p>No. {data.id}</p>
+          <p>{data.name}</p>
+          <div>Type:
+            <ul>{types}</ul>
+          </div>
+        </div>
+      </div>
+      <div className='other_info'>
         <p>Height: {data.height}</p>
         <p>Weight: {data.weight}</p>
         <div>Abilities:
           <ul>{abilities}</ul>
         </div>
-        <div>Type:
-        <ul>{types}</ul>
-        </div>
-        <img src={data.sprites.versions["generation-iii"].emerald.front_default} alt={data.name} />
       </div>
     </section>
   );
