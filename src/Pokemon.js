@@ -1,31 +1,20 @@
-import { useState } from "react";
 import { useQuery } from 'react-query';
-import pokemon from './pokemon.json';
 import './Pokemon.css';
 
-const pokemonArray = [];
-pokemon.forEach(item => {
-  pokemonArray.push(<option value={item.id} key={item.id}>{item.name}</option>);
-});
+const url = new URL(window.location.href);
+const params = url.searchParams;
+const id = params.get('id') ? params.get('id') : 1;
+
+const fetchPokemon = async () => {
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+  if (res.ok){ return res.json(); }
+  throw new Error(res.statusText);
+};
 
 export default function Pokemon() {
-  const [pokemonId, setPokemonId] = useState(1);
+  const { data } = useQuery('pokemon', fetchPokemon);
   const abilities = [];
   const types = [];
-
-  const fetchPokemon = async () => {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`);
-    if (res.ok){ return res.json(); }
-    throw new Error(res.statusText);
-  };
-
-  const pokemonChange = () => {
-    const pokemonSelect = document.getElementById('pokemon_select');
-    setPokemonId(+pokemonSelect.value);
-    alert('pokemon changed');
-  }
-
-  const { data } = useQuery('pokemon', fetchPokemon);
 
   data.abilities.forEach((ability) => {
     abilities.push(
@@ -41,9 +30,6 @@ export default function Pokemon() {
 
   return (
     <div>
-      <select id="pokemon_select" onChange={pokemonChange}>
-        {pokemonArray}
-      </select>
       <section className='pokemon'>
         <div className='top_info'>
           <div className='image_frame'>
