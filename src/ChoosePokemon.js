@@ -15,6 +15,15 @@ export default function ChoosePokemon() {
     setPokemonId(+pokemonSelect.value);
   }
 
+  window.addEventListener('load', () => {
+    const pokemonSelect = document.getElementById('pokemon_select');
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    const id = params.get('id') ? params.get('id') : 1;
+    setPokemonId(+id);
+    pokemonSelect.value = id;
+  });
+
   return (
     <React.Fragment>
       <select id="pokemon_select" onChange={pokemonChange}>
