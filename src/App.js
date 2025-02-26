@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 import Pokemon from './Pokemon';
 import Loading from './Loading';
+import Error from './Error';
 
 const cli = new QueryClient({
   defaultOptions: {
@@ -15,7 +16,7 @@ const cli = new QueryClient({
 function App() {
   return (
     <Suspense fallback={<Loading />}>
-      <ErrorBoundary fallback={<p>Error has happened.</p>}>
+      <ErrorBoundary fallback={<Error />}>
         <QueryClientProvider client={cli}>
           <Pokemon />
         </QueryClientProvider>
